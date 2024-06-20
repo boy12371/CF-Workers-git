@@ -23,7 +23,10 @@ export default {
   async setHeaders(event) {
     const { request } = event;
     const headers = new Headers();
-    headers.set('Content-Security-Policy', `script-src 'self' cf-workers-git.pages.dev git.sveil.com github.githubassets.com;`);
+	headers.delete('content-security-policy')
+	headers.delete('content-security-policy-report-only')
+	headers.delete('clear-site-data')
+    // headers.set('Content-Security-Policy', `script-src 'self' *.pages.dev *.sveil.com github.githubassets.com;`);
     return new Response(null, {
       headers,
     });
