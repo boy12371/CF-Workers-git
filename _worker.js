@@ -1,11 +1,16 @@
 const API_HOST = "github.com"
 
-const statusCode = 301
-async function handleRequest(request) {
+async function handleRequest(request, ctx) {
     const url = new URL(request.url)
     const { pathname, search, hash } = url
     const destinationURL = "https://" + API_HOST + pathname + search + hash
-    return Response.redirect(destinationURL, statusCode)
+    let response = await caches.default.match(request)
+    if (!response) {
+        response = await fetch(destinationURL)
+        ctx.waitUntil(caches.default.put(request, response.clone()))
+    }
+
+    return response
 }
 
 export default {
