@@ -23,7 +23,7 @@ export default {
   async setHeaders(event) {
     const { request } = event;
     const headers = new Headers();
-    headers.set('Content-Security-Policy', `script-src 'self' https://git.sveil.com https://github.githubassets.com;`);
+    headers.set('Content-Security-Policy', `script-src 'self' git.sveil.com github.githubassets.com;`);
     return new Response(null, {
       headers,
     });
